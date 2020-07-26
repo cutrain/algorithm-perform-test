@@ -1,0 +1,16 @@
+
+*.csv
+*.png
+*.jpg
+*.mp4
+*.avi
+*.json
+*.txt
+*.log
+*.swp
+*.swo
+*.pyc
+
+__pycache__/
+
+/venv/
