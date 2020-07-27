@@ -3,24 +3,19 @@ import sys
 __module_path='../visual-analysis-platform'
 sys.path.append(__module_path)
 
-from algorithm.dataframe.evaluation import *
+from algorithm.dataframe.process import *
 from maker import LabelDataMaker
 from test_tool import Timer
 
 size_list = ['1tb']
 filesize_list = ['1mb', '30mb', '1gb']
 
-def test_fone():
+def test_random():
     for size in size_list:
         for file_size in filesize_list:
             kwargs = {
-                'true_posi':'right',
-                'average':'binary',
-                'truth_column':'label',
-                'pred_column':'label',
-                'pos_label':'1',
             }
-            result_file = 'report/test_fone_{}_{}.txt'.format(size, file_size)
+            result_file = 'report/test_random_{}_{}.txt'.format(size, file_size)
             if os.path.exists(result_file):
                 print('skip {}'.format(result_file))
                 continue
@@ -30,24 +25,22 @@ def test_fone():
                 continue
             timer = Timer()
             print('running {}'.format(result_file))
-            new_data = next(dfmaker)
-            timer(fone, new_data, new_data, **kwargs)
+            timer(random, next(dfmaker), **kwargs)
             cost = timer.avg_cost * multip
             with open(result_file, 'w') as f:
                 f.write('total,each,number\n')
                 f.write(str(cost)+","+str(timer.avg_cost)+","+str(multip))
 
-def test_recall():
+
+def test_sort():
     for size in size_list:
         for file_size in filesize_list:
             kwargs = {
-                'true_posi':'right',
-                'average':'binary',
-                'truth_column':'label',
-                'pred_column':'label',
-                'pos_label':'1',
+                'columns':'1',
+                'ascending':'True',
+                'na_position':'last',
             }
-            result_file = 'report/test_recall_{}_{}.txt'.format(size, file_size)
+            result_file = 'report/test_sort_{}_{}.txt'.format(size, file_size)
             if os.path.exists(result_file):
                 print('skip {}'.format(result_file))
                 continue
@@ -57,23 +50,20 @@ def test_recall():
                 continue
             timer = Timer()
             print('running {}'.format(result_file))
-            new_data = next(dfmaker)
-            timer(recall, new_data, new_data, **kwargs)
+            timer(sort, next(dfmaker), **kwargs)
             cost = timer.avg_cost * multip
             with open(result_file, 'w') as f:
                 f.write('total,each,number\n')
                 f.write(str(cost)+","+str(timer.avg_cost)+","+str(multip))
 
-def test_accuracy():
+def test_normalization():
     for size in size_list:
         for file_size in filesize_list:
             kwargs = {
-                'true_posi':'right',
-                'average':'binary',
-                'truth_column':'label',
-                'pred_column':'label',
+                'method':'min-max',
+                'columns':'1',
             }
-            result_file = 'report/test_accuracy_{}_{}.txt'.format(size, file_size)
+            result_file = 'report/test_normalization_{}_{}.txt'.format(size, file_size)
             if os.path.exists(result_file):
                 print('skip {}'.format(result_file))
                 continue
@@ -83,8 +73,7 @@ def test_accuracy():
                 continue
             timer = Timer()
             print('running {}'.format(result_file))
-            new_data = next(dfmaker)
-            timer(accuracy, new_data, new_data, **kwargs)
+            timer(normalization, next(dfmaker), **kwargs)
             cost = timer.avg_cost * multip
             with open(result_file, 'w') as f:
                 f.write('total,each,number\n')

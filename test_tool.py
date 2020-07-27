@@ -19,3 +19,7 @@ class Timer:
     def avg_cost(self):
         return self.__total / self.__count
 
+    @property
+    def count(self):
+        return self.__count
+

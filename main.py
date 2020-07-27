@@ -33,6 +33,18 @@ def test_csv_cluster():
     import csv_cluster_test
     test_group(csv_cluster_test)
 
+def test_csv_evaluation():
+    import csv_evaluation_test
+    test_group(csv_evaluation_test)
+
+def test_process():
+    import csv_process_test
+    test_group(csv_process_test)
+
+def test_outlier():
+    import csv_outlier_test
+    test_group(csv_outlier_test)
+
 def test_image():
     import image_test
     test_group(image_test)
@@ -48,6 +60,10 @@ def test_graph():
 if __name__ == "__main__":
     test_basic()
     test_csv()
+    test_csv_cluster()
+    test_process()
+    test_csv_evaluation()
+    test_outlier()
     test_image()
     test_video()
     test_graph()

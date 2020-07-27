@@ -77,6 +77,8 @@ def test_svm():
                 f.write('total,each,number\n')
                 f.write(str(cost)+","+str(timer.avg_cost)+","+str(multip))
 
+'''
+neural network doesn't support multi cpu training
 def test_neural_network():
     for size in size_list:
         for file_size in filesize_list:
@@ -101,18 +103,19 @@ def test_neural_network():
             with open(result_file, 'w') as f:
                 f.write('total,each,number\n')
                 f.write(str(cost)+","+str(timer.avg_cost)+","+str(multip))
+'''
 
 def test_naive_bayes():
     for size in size_list:
         for file_size in filesize_list:
             kwargs = {
-                'label_columns': 'lable'
+                'label_columns': 'label'
             }
             result_file = 'report/test_naive_bayes_{}_{}.txt'.format(size, file_size)
             if os.path.exists(result_file):
                 print('skip {}'.format(result_file))
                 continue
-            dfmaker = LabelDataMaker(size, file_size, 100, 2) 
+            dfmaker = LabelDataMaker(size, file_size, 100, 2)
             multip = len(dfmaker)
             if multip == 0:
                 continue

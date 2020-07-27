@@ -4,7 +4,7 @@ __module_path='../visual-analysis-platform'
 sys.path.append(__module_path)
 
 from algorithm.dataframe.cluster import *
-from maker import DataFrameMaker
+from maker import LabelDataMaker
 from test_tool import Timer
 
 size_list = ['1tb']
@@ -14,8 +14,9 @@ def test_dbscan():
     for size in size_list:
         for file_size in filesize_list:
             kwargs = {
-                'eps':0.5,
-                'minpts':5,
+                'n_jobs':'10',
+                'eps':'0.5',
+                'minpts':'5',
                 'predict_labels':'label',
                 'store_origin':'False',
             }
@@ -23,7 +24,7 @@ def test_dbscan():
             if os.path.exists(result_file):
                 print('skip {}'.format(result_file))
                 continue
-            dfmaker = DataFrameMaker(size, file_size, 100)
+            dfmaker = LabelDataMaker(size, file_size, 100, 2)
             multip = len(dfmaker)
             if multip == 0:
                 continue
@@ -39,16 +40,17 @@ def test_kmeans():
     for size in size_list:
         for file_size in filesize_list:
             kwargs = {
-                'n_cluster':8,
-                'max_iter':300,
+                'n_cluster':'2',
+                'max_iter':'300',
                 'predict_labels':'label',
                 'store_origin':'False',
+                'n_jobs':'10',
             }
             result_file = 'report/test_kmeans_{}_{}.txt'.format(size, file_size)
             if os.path.exists(result_file):
                 print('skip {}'.format(result_file))
                 continue
-            dfmaker = DataFrameMaker(size, file_size, 100)
+            dfmaker = LabelDataMaker(size, file_size, 100, 2)
             multip = len(dfmaker)
             if multip == 0:
                 continue
